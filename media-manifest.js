@@ -6,5 +6,17 @@ window.CATERING_MEDIA = {
     "IMG-20261003-WA0021.jpg",
     "IMG-20261003-WA0022.jpg"
   ],
-  "videos": []
+  "videos": [
+    "VID-20261003-WA0023.mp4",
+    "VID-20261003-WA0024.mp4",
+    "VID-20261003-WA0025.mp4",
+    "VID-20261003-WA0026.mp4",
+    "VID-20261003-WA0027.mp4",
+    "VID-20261003-WA0028.mp4",
+    "VID-20261003-WA0029.mp4",
+    "VID-20261003-WA0030.mp4",
+    "VID-20261003-WA0031.mp4",
+    "VID-20261003-WA0032.mp4",
+    "VID-20261003-WA0033.mp4"
+  ]
 };
