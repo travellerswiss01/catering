@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="de-CH">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Catering – Foto-Vorschau</title>
+<style>
+body{font-family:Arial,sans-serif;margin:0;background:#f5f5f3;color:#171717}
+header{padding:28px 20px;max-width:1200px;margin:auto}
+h1{margin:0 0 8px}p{color:#666}
+.grid{max-width:1200px;margin:auto;padding:0 20px 40px;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}
+figure{margin:0;background:white;border-radius:14px;overflow:hidden;box-shadow:0 4px 18px #0001}
+img,video{display:block;width:100%;height:320px;object-fit:cover}
+figcaption{padding:14px;font-size:14px;font-weight:600}
+</style>
+</head>
+<body>
+<header><h1>Catering – Foto-Vorschau</h1><p>Alle aktuell erkannten Medien aus dem Repository.</p></header>
+<div class="grid" id="media"></div>
+<script>
+const base='https://raw.githubusercontent.com/travellerswiss01/catering/main/';
+const images=["IMG-20261003-WA0006.jpg","IMG-20261003-WA0008.jpg","IMG-20261003-WA0016.jpg","IMG-20261003-WA0021.jpg","IMG-20261003-WA0022.jpg"];
+const videos=["VID-20261003-WA0033.mp4"];
+const root=document.querySelector('#media');
+images.forEach((f,i)=>{const fig=document.createElement('figure');fig.innerHTML='<img src="'+base+encodeURIComponent(f)+'" alt="'+f+'"><figcaption>Foto '+(i+1)+' · '+f+'</figcaption>';root.appendChild(fig)});
+videos.forEach(f=>{const fig=document.createElement('figure');fig.innerHTML='<video src="'+base+encodeURIComponent(f)+'" controls muted playsinline preload="metadata"></video><figcaption>Video · '+f+'</figcaption>';root.appendChild(fig)});
+</script>
+</body>
+</html>
