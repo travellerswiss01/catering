@@ -22,16 +22,18 @@ jobs:
           root=pathlib.Path(".")
           image_ext={".jpg",".jpeg",".png",".webp",".gif",".avif"}
           video_ext={".mp4",".webm",".mov"}
-          files=[]
+          images=[]
+          videos=[]
           for p in root.iterdir():
-              if p.is_file() and re.match(r"^IMG-20261003-.*", p.name, re.I):
-                  if p.suffix.lower() in image_ext | video_ext:
-                      files.append(p.name)
-          files.sort()
-          data={
-            "images":[x for x in files if pathlib.Path(x).suffix.lower() in image_ext],
-            "videos":[x for x in files if pathlib.Path(x).suffix.lower() in video_ext]
-          }
+              if not p.is_file():
+                  continue
+              if re.match(r"^IMG-20261003-.*", p.name, re.I) and p.suffix.lower() in image_ext:
+                  images.append(p.name)
+              if re.match(r"^VID-20261003-.*", p.name, re.I) and p.suffix.lower() in video_ext:
+                  videos.append(p.name)
+          images.sort()
+          videos.sort()
+          data={"images":images,"videos":videos}
           pathlib.Path("media-manifest.js").write_text(
             "window.CATERING_MEDIA = "+json.dumps(data, ensure_ascii=False, indent=2)+";\n",
             encoding="utf-8"
