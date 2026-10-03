@@ -1,0 +1,1 @@
+window.CATERING_MEDIA = {"images":["IMG-20261003-WA0021.jpg"],"videos":[]};
