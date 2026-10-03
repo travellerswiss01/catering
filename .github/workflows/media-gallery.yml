@@ -1,0 +1,48 @@
+name: Update media gallery
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  gallery:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build media manifest
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json, pathlib, re
+          root=pathlib.Path(".")
+          image_ext={".jpg",".jpeg",".png",".webp",".gif",".avif"}
+          video_ext={".mp4",".webm",".mov"}
+          files=[]
+          for p in root.iterdir():
+              if p.is_file() and re.match(r"^IMG-20261003-.*", p.name, re.I):
+                  if p.suffix.lower() in image_ext | video_ext:
+                      files.append(p.name)
+          files.sort()
+          data={
+            "images":[x for x in files if pathlib.Path(x).suffix.lower() in image_ext],
+            "videos":[x for x in files if pathlib.Path(x).suffix.lower() in video_ext]
+          }
+          pathlib.Path("media-manifest.js").write_text(
+            "window.CATERING_MEDIA = "+json.dumps(data, ensure_ascii=False, indent=2)+";\n",
+            encoding="utf-8"
+          )
+          print(json.dumps(data, ensure_ascii=False, indent=2))
+          PY
+
+      - name: Commit manifest
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add media-manifest.js
+          git diff --cached --quiet || git commit -m "Auto-update catering media manifest"
+          git push
